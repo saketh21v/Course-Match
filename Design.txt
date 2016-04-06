@@ -1,0 +1,74 @@
+HomePage:
+	-> Logo
+	-> Title
+	-> User registration button	[1]
+	-> User login ---> Main Content[2]
+	-> Info about Page
+	-> Creators Info
+									
+
+[1]	User Registration Page:
+		-> Username
+		-> Password
+		-> Bio
+		-> Sign up button [1-1]
+
+[2] Main Content:
+		-> Friend Search
+		-> Course Search
+		-> Add Course [2-2]
+		-> Settings page button [3]
+
+[3] Settings page:
+		-> Bio
+		-> Current Major
+		-> Interests
+
+[1-1] Sign Up Result page:
+		-> Succesful registration Banner
+		-> Add Courses
+		-> Add Friends
+		-> Settings
+
+[2-2] Course Add Page:
+		-> Select from course List 
+		-> Add Semester
+		-> Add Prof
+		-> Give Feedback
+
+
+
+Database Design:
+
+	Tables:
+		1. Student
+		2. Course
+		3. Professor
+		4. Feedback
+
+
+
+		Table Design
+
+			Student:
+					+---------------------------------------------------------------------------------------+
+					| ID | Name | Password(hash) | Email | Join Year | Stream | No. of Courses done | About |
+					+---------------------------------------------------------------------------------------+
+
+			Course:
+					+------------------------------------------------------------+
+					| ID | Name | Department | Description | Credits | Avg Rating|
+					+------------------------------------------------------------+
+
+			Professor:
+					+-----------------------------------------------------------------+
+					| ID | Name | Department | About | Email | Avg Rating (keep this?)|
+					+-----------------------------------------------------------------+
+
+			Feedback: (Every student has one table)
+					+---------------------------------------------------------------------+
+					| UniqueID | Course_FK | Year |Semester | Professor |Feedback | Rating|
+					+---------------------------------------------------------------------+
+
+
+
