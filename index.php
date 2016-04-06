@@ -43,7 +43,7 @@
 				<p>Find your friends. Find your courses. That's all there is to it :p.</p>
 				<ul class="actions">
 					<li>
-						<a href="#" class="button big">Shit! This is awsm. Let me join plzzzz</a>
+						<a href="./registration.html" class="button big">Shit! This is awsm. Let me join plzzzz</a>
 					</li>
 				</ul>
 			</section>
@@ -83,52 +83,36 @@
 
 		<!-- Two -->
 			<section id="two" class="wrapper style2 special">
+				<center>
 				<div class="container">
 					<header class="major">
-						<h2>Lorem ipsum dolor sit</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, autem.</p>
+						<h2>Made by us.</h2>
+						<p>We are we.</p>
 					</header>
 					<section class="profiles">
-						<div class="row">
+						<div class="row" style="padding:0cm 0cm 0cm 35%">
 							<section class="3u 6u(medium) 12u$(xsmall) profile">
 								<img src="images/profile_placeholder.gif" alt="" />
-								<h4>Lorem ipsum</h4>
-								<p>Lorem ipsum dolor</p>
+								<h4>Me</h4>
+								<p>That's me.</p>
 							</section>
 							<section class="3u 6u$(medium) 12u$(xsmall) profile">
 								<img src="images/profile_placeholder.gif" alt="" />
-								<h4>Voluptatem dolores</h4>
-								<p>Ullam nihil repudi</p>
-							</section>
-							<section class="3u 6u(medium) 12u$(xsmall) profile">
-								<img src="images/profile_placeholder.gif" alt="" />
-								<h4>Doloremque quo</h4>
-								<p>Harum corrupti quia</p>
-							</section>
-							<section class="3u$ 6u$(medium) 12u$(xsmall) profile">
-								<img src="images/profile_placeholder.gif" alt="" />
-								<h4>Voluptatem dicta</h4>
-								<p>Et natus sapiente</p>
+								<h4>My Friend</h4>
+								<p>That's my friend :p.</p>
 							</section>
 						</div>
 					</section>
-					<footer>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam dolore illum, temporibus veritatis eligendi, aliquam, dolor enim itaque veniam aut eaque sequi qui quia vitae pariatur repudiandae ab dignissimos ex!</p>
-						<ul class="actions">
-							<li>
-								<a href="#" class="button big">Lorem ipsum dolor sit</a>
-							</li>
-						</ul>
-					</footer>
 				</div>
+			</center>
 			</section>
 
 		<!-- Three -->
 			<section id="three" class="wrapper style3 special">
 				<div class="container">
 					<header class="major">
-						<h2>Consectetur adipisicing elit</h2>
-						<p>Lorem ipsum dolor sit amet. Delectus consequatur, similique quia!</p>
+						<h2>Have some feedback?</h2>
+						<p>It's is mostly welcome. Just don't bullshit.</p>
 					</header>
 				</div>
 				<div class="container 50%">
@@ -157,50 +141,6 @@
 
 			<footer id="footer">
 				<div class="container">
-					<!--<section class="links">
-						<div class="row">
-							<section class="3u 6u(medium) 12u$(small)">
-								<h3>Lorem ipsum dolor</h3>
-								<ul class="unstyled">
-									<li><a href="#">Lorem ipsum dolor sit</a></li>
-									<li><a href="#">Nesciunt itaque, alias possimus</a></li>
-									<li><a href="#">Optio rerum beatae autem</a></li>
-									<li><a href="#">Nostrum nemo dolorum facilis</a></li>
-									<li><a href="#">Quo fugit dolor totam</a></li>
-								</ul>
-							</section>
-							<section class="3u 6u$(medium) 12u$(small)">
-								<h3>Culpa quia, nesciunt</h3>
-								<ul class="unstyled">
-									<li><a href="#">Lorem ipsum dolor sit</a></li>
-									<li><a href="#">Reiciendis dicta laboriosam enim</a></li>
-									<li><a href="#">Corporis, non aut rerum</a></li>
-									<li><a href="#">Laboriosam nulla voluptas, harum</a></li>
-									<li><a href="#">Facere eligendi, inventore dolor</a></li>
-								</ul>
-							</section>
-							<section class="3u 6u(medium) 12u$(small)">
-								<h3>Neque, dolore, facere</h3>
-								<ul class="unstyled">
-									<li><a href="#">Lorem ipsum dolor sit</a></li>
-									<li><a href="#">Distinctio, inventore quidem nesciunt</a></li>
-									<li><a href="#">Explicabo inventore itaque autem</a></li>
-									<li><a href="#">Aperiam harum, sint quibusdam</a></li>
-									<li><a href="#">Labore excepturi assumenda</a></li>
-								</ul>
-							</section>
-							<section class="3u$ 6u$(medium) 12u$(small)">
-								<h3>Illum, tempori, saepe</h3>
-								<ul class="unstyled">
-									<li><a href="#">Lorem ipsum dolor sit</a></li>
-									<li><a href="#">Recusandae, culpa necessita nam</a></li>
-									<li><a href="#">Cupiditate, debitis adipisci blandi</a></li>
-									<li><a href="#">Tempore nam, enim quia</a></li>
-									<li><a href="#">Explicabo molestiae dolor labore</a></li>
-								</ul>
-							</section>
-						</div>
-					</section>-->
 					<div class="row">
 						<div class="8u 12u$(medium)">
 							<ul class="copyright">
@@ -226,6 +166,7 @@
 						</div>
 					</div>
 				</div>
+				<div align="right" style="padding:0cm 6% 0cm 0cm"><p>Sorry! These things don't work</p></div>
 			</footer>
 
 	</body>
