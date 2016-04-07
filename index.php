@@ -26,12 +26,11 @@
 
 		<!-- Header -->
 			<header id="header">
-				<h1><a href="index.html">Course-Match</a></h1>
+				<h1><a href="index.php">Course-Match</a></h1>
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Home</a></li>
-						<!--<li><a href="generic.html">Courses</a></li>-->
-						<li><a href="login.html">Sign In</a></li>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="login.php">Sign In</a></li>
 						<li><a href="registration.php" class="button"><?php echo "Sign Up";?></a></li>
 					</ul>
 				</nav>

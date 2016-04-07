@@ -186,21 +186,13 @@
     }
     </style>
 
-    <!-- PHP script to register -->
+    <!-- PHP script to log in -->
 <?php
-$ID = rand(1000000000, 9999999999);
-$fName = "";
-$lName = "";
+$ID = "";
 $psswd = "";
-$email = "";
-$jYear = 2016;
-$stream = "";
-$nCourses = 0;
-$About = "";
-
 
 $query = "";
-
+$correct = true;
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
 	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
@@ -211,25 +203,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
 	        die();
 	    }
 
-      $ID = $_POST["ID"];
-	    $fName = $_POST["fName"];
-	    $lName = $_POST["lName"];
+      	$ID = $_POST["ID"];
 	    $psswd = $_POST["psswd"];
-	    $email = $_POST["email"];
-      $jYear = $_POST["jYear"];
-      $stream = $_POST["stream"];
 
-	    $query = "INSERT INTO student VALUES(\"".$ID."\",\"".$fName." ".$lName."\", \"".$psswd."\", \"".$email."\", \"".$jYear."\", \"".$stream."\", \"".$nCourses."\", \"".$About."\")";
+	    $query = 'SELECT Password FROM Student WHERE ID ="'.$ID.'"';
+	    
 	    $l = mysqli_query($conn, $query);
-	    if($l == 1){
-	    		header("Location: http://localhost/coursematch/temp/profile.html");
-	    		die();
-	    }
-	    else{
-	    	header("Location: http://localhost/coursematch/temp/someError.html");
-	        die();	
-	    }
-      mysqli_close($conn);
+	    if($l){
+	    	$row = mysqli_fetch_row($l);
+		    
+		    $pass = $row[0];
+
+
+		    if(strcmp($pass, $psswd) == 0){
+		    		header("Location: http://localhost/coursematch/temp/profile.html");
+		    		die();
+		    }
+		    
+		}else{
+		    	$correct = false;
+		    }
+	    mysqli_close($conn);
 	}
 ?>
 
@@ -238,9 +232,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
   <div class="form">
         <div class="tab-content">
           <div id="signup">
-            <h1>Sign Up</h1>
+            <h1>Sign In</h1>
+            <?php if(!$correct) echo '<center><font color="red"><h5>*Check your credentials</h5></font></center>' ?>
 
-            <form action="registration.php" method="post">
+            <form action=<?php echo '"'.$_SERVER['PHP_SELF'].'"'?> method="post">
             
             <div class="field-wrap">
               <label>
@@ -249,53 +244,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
               <input type="text" required autocomplete="off" name="ID"/>
             </div>
 
-            <div class="top-row">
-              <div class="field-wrap">
-                <label>
-                  First Name<span class="req">*</span>
-                </label>
-                <input type="text" required autocomplete="off" name="fName"/>
-              </div>
-
-              <div class="field-wrap">
-                <label>
-                  Last Name<span class="req">*</span>
-                </label>
-                <input type="text"required autocomplete="off" name="lName"/>
-              </div>
-            </div>
-
-
             <div class="field-wrap">
               <label>
-                Email Address<span class="req">*</span>
-              </label>
-              <input type="email"required autocomplete="off" name="email"/>
-            </div>
-
-            <div class="field-wrap">
-              <label>
-                Set A Password<span class="req">*</span>
+                Password<span class="req">*</span>
               </label>
               <input type="password"required autocomplete="off" name="psswd"/>
             </div>
-            
-            <div class="top-row">
-              <div class="field-wrap">
-                <label>
-                  Join Year<span class="req">*</span>
-                </label>
-                <input type="text" required autocomplete="off" name="jYear"/>
-              </div>
-
-              <div class="field-wrap">
-                <label>
-                  Stream <span class="req">*</span>
-                </label>
-                <input type="text"required autocomplete="off" name="stream"/>
-              </div>
-            </div>
-
 
             <button type="submit" class="button button-block"/>Get Started</button>
 
