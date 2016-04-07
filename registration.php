@@ -35,8 +35,8 @@
       max-width: 600px;
       margin: 40px auto;
       border-radius: 4px;
-      box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
     }
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
 
     .tab-group {
       list-style: none;
@@ -185,80 +185,130 @@
       text-align: right;
     }
     </style>
+
+    <!-- PHP script to register -->
+<?php
+$ID = rand(1000000000, 9999999999);
+$fName = "";
+$lName = "";
+$psswd = "";
+$email = "";
+$jYear = 2016;
+$stream = "";
+$nCourses = 0;
+$About = "";
+
+
+$query = "";
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
+	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
+	  // Check connection
+	  if (mysqli_connect_errno())
+	    {
+	        header("Location: http://localhost/coursematch/temp/someError.html");
+	        die();
+	    }
+
+      $ID = $_POST["ID"];
+	    $fName = $_POST["fName"];
+	    $lName = $_POST["lName"];
+	    $psswd = $_POST["psswd"];
+	    $email = $_POST["email"];
+      $jYear = $_POST["jYear"];
+      $stream = $_POST["stream"];
+
+	    $query = "INSERT INTO student VALUES(\"".$ID."\",\"".$fName." ".$lName."\", \"".$psswd."\", \"".$email."\", \"".$jYear."\", \"".$stream."\", \"".$nCourses."\", \"".$About."\")";
+	    $l = mysqli_query($conn, $query);
+	    if($l == 1){
+	    		header("Location: http://localhost/coursematch/temp/profile.html");
+	    		die();
+	    }
+	    else{
+	    	header("Location: http://localhost/coursematch/temp/someError.html");
+	        die();	
+	    }
+	}
+?>
+
   </head>
   <body>
-  <div class="form">        
+  <div class="form">
         <div class="tab-content">
-          <div id="signup">   
+          <div id="signup">
             <h1>Sign Up</h1>
+
+            <form action="registration.php" method="post">
             
-            <form action="/" method="post">
-            
+            <div class="field-wrap">
+              <label>
+                ID<span class="req">*</span>
+              </label>
+              <input type="text" required autocomplete="off" name="ID"/>
+            </div>
+
             <div class="top-row">
               <div class="field-wrap">
                 <label>
                   First Name<span class="req">*</span>
                 </label>
-                <input type="text" required autocomplete="off" />
+                <input type="text" required autocomplete="off" name="fName"/>
               </div>
-          
+
               <div class="field-wrap">
                 <label>
                   Last Name<span class="req">*</span>
                 </label>
-                <input type="text"required autocomplete="off"/>
+                <input type="text"required autocomplete="off" name="lName"/>
               </div>
             </div>
+
 
             <div class="field-wrap">
               <label>
                 Email Address<span class="req">*</span>
               </label>
-              <input type="email"required autocomplete="off"/>
+              <input type="email"required autocomplete="off" name="email"/>
             </div>
-            
+
             <div class="field-wrap">
               <label>
                 Set A Password<span class="req">*</span>
               </label>
-              <input type="password"required autocomplete="off"/>
+              <input type="password"required autocomplete="off" name="psswd"/>
             </div>
             
-            <button type="submit" class="button button-block"/>Get Started</button>
-            
-            </form>
-
-          </div>
-          
-          <div id="login">   
-            <h1>Welcome Back!</h1>
-            
-            <form action="/" method="post">
-            
+            <div class="top-row">
               <div class="field-wrap">
-              <label>
-                Email Address<span class="req">*</span>
-              </label>
-              <input type="email"required autocomplete="off"/>
+                <label>
+                  Join Year<span class="req">*</span>
+                </label>
+                <input type="text" required autocomplete="off" name="jYear"/>
+              </div>
+
+              <div class="field-wrap">
+                <label>
+                  Stream <span class="req">*</span>
+                </label>
+                <input type="text"required autocomplete="off" name="stream"/>
+              </div>
             </div>
-            
-            <div class="field-wrap">
-              <label>
-                Password<span class="req">*</span>
-              </label>
-              <input type="password"required autocomplete="off"/>
-            </div>
-            
-            <p class="forgot"><a href="#">Forgot Password?</a></p>
-            
-            <button class="button button-block"/>Log In</button>
-            
+
+
+            <button type="submit" class="button button-block"/>Get Started</button>
+
             </form>
 
           </div>
-          
+
+          <div id="login">
+            // Not Needed
+
+          </div>
+
         </div><!-- tab-content -->
-        
+
   </div> <!-- /form -->
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script>$('.form').find('input, textarea').on('keyup blur focus', function (e) {

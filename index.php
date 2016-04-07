@@ -43,7 +43,7 @@
 				<p>Find your friends. Find your courses. That's all there is to it :p.</p>
 				<ul class="actions">
 					<li>
-						<a href="./registration.html" class="button big">Shit! This is awsm. Let me join plzzzz</a>
+						<a href="./registration.php" class="button big">Shit! This is awsm. Let me join plzzzz</a>
 					</li>
 				</ul>
 			</section>
