@@ -194,37 +194,42 @@ $psswd = "";
 $query = "";
 $correct = true;
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
-	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
-	  // Check connection
-	  if (mysqli_connect_errno())
-	    {
-	        header("Location: http://localhost/coursematch/temp/someError.html");
-	        die();
-	    }
-
-      	$ID = $_POST["ID"];
-	    $psswd = $_POST["psswd"];
-
-	    $query = 'SELECT Password FROM Student WHERE ID ="'.$ID.'"';
-	    
-	    $l = mysqli_query($conn, $query);
-	    if($l){
-	    	$row = mysqli_fetch_row($l);
-		    
-		    $pass = $row[0];
 
 
-		    if(strcmp($pass, $psswd) == 0){
-		    		header("Location: http://localhost/coursematch/temp/profile.html");
-		    		die();
-		    }
-		    
-		}else{
-		    	$correct = false;
-		    }
-	    mysqli_close($conn);
-	}
+  function getLoc(){
+    $loc = $_SERVER['PHP_SELF'];
+    if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
+    $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
+    // Check connection
+    if (mysqli_connect_errno())
+      {
+          header("Location: http://localhost/coursematch/temp/thisShitisFuckedup.html");
+          die();
+      }
+
+      $ID = $_POST["ID"];
+      $psswd = $_POST["psswd"];
+
+      $query = 'SELECT Password FROM Student WHERE ID ="'.$ID.'"';
+      
+      $l = mysqli_query($conn, $query);
+      if($l){
+        $row = mysqli_fetch_row($l);
+        
+        $pass = $row[0];
+
+
+        if(strcmp($pass, $psswd) == 0){
+            $loc =  "http://localhost/coursematch/temp/profile.php";
+        }
+        
+    }else{
+          $correct = false;
+        }
+      mysqli_close($conn);
+    }    
+    return $loc;
+  }
 ?>
 
   </head>
@@ -235,7 +240,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
             <h1>Sign In</h1>
             <?php if(!$correct) echo '<center><font color="red"><h5>*Check your credentials</h5></font></center>' ?>
 
-            <form action=<?php echo '"'.$_SERVER['PHP_SELF'].'"'?> method="post">
+            <form name="loginForm" action=<?php echo '"'.getLoc().'"'?> method="post">
             
             <div class="field-wrap">
               <label>
@@ -297,6 +302,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
       $(target).fadeIn(600);
   });
   //# sourceURL=pen.js
+  
+  if(document.forms['loginForm']['action'].toString() == <?php echo '"http://localhost'.$_SERVER['PHP_SELF'].'"'?>){
+    document.forms['loginForm']['ID'].value = <?php echo '"'.$ID.'"' ?>;
+    document.forms['loginForm'].submit();
+  }
+
+
   </script>
   </body>
 </html>
