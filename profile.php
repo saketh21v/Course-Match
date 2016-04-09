@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <!-- saved from url=(0046)http://localhost/coursematch/temp/profile.html -->
 <html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+
 <?php
-$ID = "";
-
-
+$email = "";
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
-      $ID = $_POST["ID"];
+      $email = $_POST["email"];
 	}
 else{
-	header("Location: http://localhost/coursematch/temp/someError.html");
+	header("Location: http://localhost/coursematch/Course-Match/someError.html");
 	die();
 	}
 ?>
-
 <style class="cp-pen-styles">body{
 	margin: 0 0 0 0;
 	background:url();
@@ -342,7 +341,7 @@ li.menuL a {
 <div class="PopUp" style="opacity: 0; margin-top: 0px;">Open Profile</div>
 <div class="clickPopUp">
 <ul id=menu>
-<h4><a class="username" href=""><?php echo $ID ?></a></h4>
+<h4><a class="username" href=""><?php echo '"'.$email.'"' ?></a></h4>
 
 <div class="Courses">
 	<li class=menuL><h5 class="buttons"><a class="active" href="#Courses">Courses</a></h5></li>

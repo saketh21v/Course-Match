@@ -188,7 +188,7 @@
 
     <!-- PHP script to log in -->
 <?php
-$ID = "";
+$email = "";
 $psswd = "";
 
 $query = "";
@@ -203,24 +203,23 @@ $correct = true;
     // Check connection
     if (mysqli_connect_errno())
       {
-          header("Location: http://localhost/coursematch/temp/thisShitisFuckedup.html");
+          header("Location: http://localhost/coursematch/temp/someError.html");
           die();
       }
 
-      $ID = $_POST["ID"];
+      $email = $_POST["email"];
       $psswd = $_POST["psswd"];
 
-      $query = 'SELECT Password FROM Student WHERE ID ="'.$ID.'"';
+      $query = 'SELECT Password FROM Student WHERE email ="'.$email.'"';
       
       $l = mysqli_query($conn, $query);
       if($l){
         $row = mysqli_fetch_row($l);
-        
         $pass = $row[0];
 
 
         if(strcmp($pass, $psswd) == 0){
-            $loc =  "http://localhost/coursematch/temp/profile.php";
+            $loc =  "http://localhost/coursematch/Course-Match/profile.php";
         }
         
     }else{
@@ -244,9 +243,9 @@ $correct = true;
             
             <div class="field-wrap">
               <label>
-                ID<span class="req">*</span>
+                Email<span class="req">*</span>
               </label>
-              <input type="text" required autocomplete="off" name="ID"/>
+              <input type="text" required autocomplete="off" name="email"/>
             </div>
 
             <div class="field-wrap">
@@ -303,8 +302,9 @@ $correct = true;
   });
   //# sourceURL=pen.js
   
-  if(document.forms['loginForm']['action'].toString() == <?php echo '"http://localhost'.$_SERVER['PHP_SELF'].'"'?>){
-    document.forms['loginForm']['ID'].value = <?php echo '"'.$ID.'"' ?>;
+  if(document.forms['loginForm']['action'].toString() != <?php echo '"http://localhost'.$_SERVER['PHP_SELF'].'"'?>){
+
+    document.forms['loginForm']['email'].value = <?php echo '"'.$email.'"' ?>;
     document.forms['loginForm'].submit();
   }
 
