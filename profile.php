@@ -4,7 +4,7 @@
 
 
 <?php
-$email = "";
+$email = "Email";
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
       $email = $_POST["email"];
 	}
