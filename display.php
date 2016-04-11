@@ -15,7 +15,7 @@
     }
 
     body {
-      background: #5F6E76;
+      background: #AB4F4F;
       font-family: 'Titillium Web', sans-serif;
     }
 
@@ -30,13 +30,13 @@
     }
 
     .form {
-      background: rgba(19, 35, 47, 0.9);
+      background: rgba(170,46,46, 0.9);
       padding: 40px;
       max-width: 600px;
       margin: 40px auto;
       border-radius: 4px;
+      box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
     }
-    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
 
     .tab-group {
       list-style: none;
@@ -185,90 +185,88 @@
       text-align: right;
     }
     </style>
-
-    <!-- PHP script to log in -->
-<?php
-$email = "";
-$psswd = "";
-
-$query = "";
-$correct = true;
-
-
-
-  function getLoc(){
-    $loc = $_SERVER['PHP_SELF'];
-    if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
-    $conn = mysqli_connect("localhost", "root", "", "coursematch");
-    // Check connection
-    if (mysqli_connect_errno())
-      {
-          header("Location: http://localhost/coursematch/temp/someError.html");
-          die();
-      }
-
-      $email = $_POST["email"];
-      $psswd = $_POST["psswd"];
-
-      $query = 'SELECT Password FROM Student WHERE email ="'.$email.'"';
-      
-      $l = mysqli_query($conn, $query);
-      if($l){
-        $row = mysqli_fetch_row($l);
-        $pass = $row[0];
-
-
-        if(strcmp($pass, $psswd) == 0){
-            $loc =  "http://localhost/coursematch/Course-Match/profile.php";
-        }
-        
-    }else{
-          $correct = false;
-        }
-      mysqli_close($conn);
-    }    
-    return $loc;
-  }
-?>
-
   </head>
   <body>
-  <div class="form">
-        <div class="tab-content">
-          <div id="signup">
-            <h1>Sign In</h1>
-            <?php if(!$correct) echo '<center><font color="red"><h5>*Check your credentials</h5></font></center>' ?>
 
-            <form name="loginForm" action=<?php echo '"'.getLoc().'"'?> method="post">
-            
-            <div class="field-wrap">
-              <label>
-                Email<span class="req">*</span>
-              </label>
-              <input type="text" required autocomplete="off" name="email"/>
-            </div>
+  <div class = "form">
+  	 <?php  
+  	 	//session_start();
 
-            <div class="field-wrap">
-              <label>
-                Password<span class="req">*</span>
-              </label>
-              <input type="password"required autocomplete="off" name="psswd"/>
-            </div>
+  	 	//$this = $_SESSION['active'];
 
-            <button type="submit" class="button button-block"/>Get Started</button>
+  	 	$name = "Junaid";
+  	 	 $conn = mysql_connect('localhost','root','');    
+            if(!$conn)
+                die("Couldnot connect");
+            mysql_select_db("coursematch");
 
-            </form>
 
-          </div>
+              $ret = mysql_query("SELECT* FROM student where Name='$name'",$conn);
+              if(! $ret)
+               {
+			      die('Could not get data: ' . mysql_error());
+			   }
 
-          <div id="login">
-            // Not Needed
+			   $id;
+              while($row = mysql_fetch_array($ret,MYSQL_NUM))
+              {
+              		echo "<p>Details of $name are: <br>";
+              		$id= $row[0];
+                	echo " <table>
 
-          </div>
+                	<tr>
+                		<td><h4>ID:</h4></td>
+                		<td>$row[0]</td>
+                		
+                	</tr>
 
-        </div><!-- tab-content -->
+                	<tr>
+                		<td><h4>Name:</h4></td>
+                		<td>$row[1]</td>
+                	</tr>
+                	<tr>
+                		<td><h4>Email:</h4></td>
+                		<td>$row[3]</td>
+                	</tr>
+                	<tr>
+                		<td><h4>Year of join:</h4></td>
+                		<td>$row[4]</td>
+                	</tr>
 
-  </div> <!-- /form -->
+                	<tr>
+                		<td><h4>Stream:</h4></td>
+                		<td>$row[5]</td>
+                	</tr>
+                	<tr>
+                		<td><h4>About:</h4></td>
+                		<td>$row[6]</td>
+                	</tr>
+
+                		
+
+
+                	</table>";
+              }
+
+             	
+               $ret = mysql_query("SELECT* FROM student_course where S_ID='$id'",$conn);
+               echo "<h3>Courses :<h3><br>";
+               while($row = mysql_fetch_array($ret,MYSQL_NUM))
+              {
+              	
+              	echo "<a href>$row[1]</a>,";
+              }
+
+
+
+  	 	
+  	 ?>
+
+  	 </div>
+  
+  
+
+
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script>$('.form').find('input, textarea').on('keyup blur focus', function (e) {
       var $this = $(this), label = $this.prev('label');
@@ -300,15 +298,14 @@ $correct = true;
       $('.tab-content > div').not(target).hide();
       $(target).fadeIn(600);
   });
+
+  $(document).keyup(function(e) {
+     if (e.keyCode == 27) { // escape key maps to keycode `27`
+        // <DO YOUR WORK HERE>
+        history.back();
+    }
+});
   //# sourceURL=pen.js
-  
-  if(document.forms['loginForm']['action'].toString() != <?php echo '"http://localhost'.$_SERVER['PHP_SELF'].'"'?>){
-
-    document.forms['loginForm']['email'].value = <?php echo '"'.$email.'"' ?>;
-    document.forms['loginForm'].submit();
-  }
-
-
   </script>
   </body>
 </html>
