@@ -188,7 +188,7 @@
 
     <!-- PHP script to log in -->
 <?php
-$email = "";
+$email = "Email";
 $psswd = "";
 
 $query = "";
@@ -199,7 +199,7 @@ $correct = true;
   function getLoc(){
     $loc = $_SERVER['PHP_SELF'];
     if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
-    $conn = mysqli_connect("localhost", "root", "", "coursematch");
+    $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
     // Check connection
     if (mysqli_connect_errno())
       {
@@ -207,16 +207,15 @@ $correct = true;
           die();
       }
 
-      $email = $_POST["email"];
+      $GLOBALS['email'] = $_POST["email"];
       $psswd = $_POST["psswd"];
 
-      $query = 'SELECT Password FROM Student WHERE email ="'.$email.'"';
+      $query = 'SELECT Password FROM Student WHERE email ="'.$GLOBALS['email'].'"';
       
       $l = mysqli_query($conn, $query);
       if($l){
         $row = mysqli_fetch_row($l);
         $pass = $row[0];
-
 
         if(strcmp($pass, $psswd) == 0){
             $loc =  "http://localhost/coursematch/Course-Match/profile.php";

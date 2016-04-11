@@ -2,11 +2,28 @@
 <!-- saved from url=(0046)http://localhost/coursematch/temp/profile.html -->
 <html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 
-
 <?php
+
+$name = "Name";
 $email = "Email";
+$stream = "Stream";
+$joinYear = 2000;
+
+$query = "";
+
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
       $email = $_POST["email"];
+	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
+
+      $query = "SELECT Name, Stream, Join_Year FROM Student WHERE Email='".$email."'";
+
+      $l = mysqli_query($conn, $query);
+      if($l){
+      	$row = mysqli_fetch_row($l);
+      	$name = $row[0];
+      	$stream = $row[1];
+      	$joinYear = $row[2];
+      }
 	}
 else{
 	header("Location: http://localhost/coursematch/Course-Match/someError.html");
@@ -296,7 +313,7 @@ else{
     overflow: hidden;
 }
 
-ul#list{
+ul.list{
 	list-style-type: none;
 	height: 150px;
 	overflow: hidden;
@@ -321,12 +338,140 @@ li.menuL a {
     padding: 14px 16px;
     text-decoration: none;
 }
+
+				<!-- /////////////////////////////////////// -->
+
+.clickPP{
+	  background-size:contain;
+	  position: relative;
+	    -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+    -webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
+    -moz-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
+	transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
+	box-shadow: 0px 0px 0px 2pt transparent;
+	  border: 0px solid #FFF;
+	  margin: auto;
+  cursor: pointer;
+	width:120px;
+	height:220px;
+	}
+
+.Portfolio{
+	  	position: relative;
+	  	border: 0px solid #FFF;
+	  	margin: auto;
+  		cursor: pointer;
+	}
+.clickPortfolio{
+	position: absolute;
+	background: #81B7D4;
+	display:none;
+	opacity:1;
+	width:450px;
+	-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
+	-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
+	transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
+	margin-top:45px;
+	border-bottom-left-radius:20px;
+	border-bottom-right-radius:20px;
+	padding: 10px 0px 10px 0px;
+	font-size:18px;
+}
+.clickPortfolio:after {
+	bottom: 100%;
+	left: 70%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(231, 76, 60, 0);
+	border-bottom-color: #e74c3c;
+	border-width: 10px;
+	margin-left: -10px;
+
+}
+.clickPortfolio a{
+		font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+	font-weight: 700;
+	text-decoration:none;
+	text-transform:uppercase;
+	color:#FFF;
+	}
+
+
+.SearchCourses{
+  font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
+  font-weight: 700;
+  text-decoration:none;
+  text-transform:uppercase;
+  color:#FFF;
+  left: 10%;
+  up: 10%;
+  down: 70%;
+}
+
+#boxL{
+  margin-left: 5%;
+  margin-top: 5%;
+  width: 300px;
+  height: 50px;
+}
+
+.container-1{
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+.container-1 input#search{
+  width: 200px;
+  height: 30px;
+  background: #2b303b;
+  border: none;
+  font-size: 10pt;
+  font-weight: 600;
+  float: middle;
+  color: #019AEC;
+  padding-left: 30px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.container-1 .icon{
+  position: absolute;
+  top: 0%;
+  margin-left: 17px;
+  margin-top: 0px;
+  z-index: 1;
+  color: #4f5b66;
+}
+
+.container-1 input#search:hover, .container-1 input#search:focus, .container-1 input#search:active{
+    outline:none;
+    background: #055580;
+  }
+
 </style>
 <style type="text/css"></style>
 
 
 </head>
 <body>
+
+<div class="container-1">
+<form action="localhost/coursematch/Course-Match/SearchFrnds.php" target="_blank" method="post">
+    <radiogroup>
+        <input type="radio" name="SearchType" checked="checked">Courses</input></br>
+        <input type="radio" name="SearchType" >Friends</input></br>
+        <input type="search" id="search" placeholder="Search..." />
+        <input type="submit"/>
+</form>
+</div>
 
 <div class="ACon">
 <div class="Profile">
@@ -341,14 +486,14 @@ li.menuL a {
 <div class="PopUp" style="opacity: 0; margin-top: 0px;">Open Profile</div>
 <div class="clickPopUp">
 <ul id=menu>
-<h4><a class="username" href=""><?php echo '"'.$email.'"' ?></a></h4>
+<h4><a class="username" href=""><?php echo $email ?></a></h4>
 
 <div class="Courses">
-	<li class=menuL><h5 class="buttons"><a class="active" href="#Courses">Courses</a></h5></li>
+	<li class=menuL><h5 class="buttons"><a class="username" href="#Courses">Courses</a></h5></li>
 </div>
 
 <div class="clickCourses">
-<ul id="list">
+<ul class="list">
 <li><h5 ><a class="username">Por</a></h5></li>
 <li><h5 ><a class="username">Por</a></h5></li>
 <li><h5 ><a class="username">Por</a></h5></li>
@@ -357,7 +502,17 @@ li.menuL a {
 </ul>
 </div>
 
-<li class=menuL><h5 class="buttons"><a class="username" href="#Portfolio">Portfolio</a></h5></li>
+<div class="Portfolio">
+	<li class=menuL><h5 class="buttons"><a class="username" href="#Portfolio">Portfolio</a></h5></li>
+	<div class="clickPortfolio">
+		<ul class="list">
+			<li><h5><a class="username">Name      : <?php echo $name?></a></h5></li>
+			<li><h5><a class="username">Email     : <?php echo $email?></a></h5></li>
+			<li><h5><a class="username">Stream    : <?php echo $stream?></a></h5></li>
+			<li><h5><a class="username">Join Year : <?php echo $joinYear?></a></h5></li>
+		</ul>
+	</div>
+
 
 <li class=menuL><h5 class="buttons"><a class="username" href="#About">About</a></h5></li>
 </ul>
@@ -367,14 +522,41 @@ li.menuL a {
 
 <script src="./profile_files/stopExecutionOnTimeout.js"></script>
 <script src="./profile_files/jquery.min.js"></script>
-<script>$(document).ready(function () {
-    var $Menu = $('.Img');
-    var $Senu = $('.Courses');
+<script>
+var $Menu = $('.Img');
+var $Cenu = $('.Courses');
+var $Penu = $('.Portfolio');
 
+function reset(P){
+        switch (P) {
+          case 'C':
+          alert("C "+$Cenu.hasClass('clickCC'));
+            if($Cenu.hasClass('clickCC')){
+                  $('.clickCC').addClass('Courses');
+                  $('.clickCC').removeClass('clickCC');
+                  $('.clickCourses').css('display', 'none');
+                  $('.Courses').css('display', 'block');
+              }
+            break;
+          case 'P':
+          alert("P "+$Penu.hasClass('.clickPP'));
+            if($Penu.hasClass('.clickPP')){
+    	            $('.clickPP').addClass('Portfolio');
+    	            $('.clickPP').removeClass('clickPP');
+    	            $('.clickPortfolio').css('display', 'none');
+    	            $('.Portfolio').css('display', 'block');
+            	}
+        }
+    }
+</script>
+<script>
+
+$(document).ready(function () {
     $('.Img').mouseenter(function () {
         $('.PopUp').css('opacity', '1');
         $('.PopUp').css('margin-top', '20px');
     });
+
     $('.Img').mouseleave(function () {
         $('.PopUp').css('opacity', '0');
         $('.PopUp').css('margin-top', '0px');
@@ -397,17 +579,48 @@ li.menuL a {
             $('.PopUp').css('display', 'block');
         }
     });
+
 	$('.Courses').on('click', function () {
-        if ($Senu.hasClass('Courses')) {
+        if ($Cenu.hasClass('Courses')) {
             $('.Courses').addClass('clickCC');
             $('.Courses').removeClass('Courses');
             $('.clickCourses').css('display', 'block');
             $('.Courses').css('display', 'none');
-        } else {
+
+            if(!$Penu.hasClass('Portfolio')){
+                $('.clickPP').addClass('Portfolio');
+                $('.clickPP').removeClass('clickPP');
+                $('.clickPortfolio').css('display', 'none');
+                $('.Portfolio').css('display', 'block');
+            }
+        }
+        else {
             $('.clickCC').addClass('Courses');
             $('.clickCC').removeClass('clickCC');
             $('.clickCourses').css('display', 'none');
             $('.Courses').css('display', 'block');
+        }
+
+    });
+
+	$('.Portfolio').on('click', function () {
+        if ($Penu.hasClass('Portfolio')) {
+            $('.Portfolio').addClass('clickPP');
+            $('.Portfolio').removeClass('Portfolio');
+            $('.clickPortfolio').css('display', 'block');
+            $('.Portfolio').css('display', 'none');
+          if (!$Cenu.hasClass('Courses')){
+            $('.clickCC').addClass('Courses');
+            $('.clickCC').removeClass('clickCC');
+            $('.clickCourses').css('display', 'none');
+            $('.Courses').css('display', 'block');
+          }
+        }
+        else {
+            $('.clickPP').addClass('Portfolio');
+            $('.clickPP').removeClass('clickPP');
+            $('.clickPortfolio').css('display', 'none');
+            $('.Portfolio').css('display', 'block');
         }
     });
 
