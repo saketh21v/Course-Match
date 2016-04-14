@@ -194,69 +194,138 @@
 
   	 	//$this = $_SESSION['active'];
 
-  	 	$name = "Junaid";
+  	 	$name = "CA";
+  	 	$active = 2;
+
   	 	 $conn = mysql_connect('localhost','root','');    
             if(!$conn)
                 die("Couldnot connect");
             mysql_select_db("coursematch");
 
+            //Student Details
 
-              $ret = mysql_query("SELECT* FROM student where Name='$name'",$conn);
-              if(! $ret)
-               {
-			      die('Could not get data: ' . mysql_error());
-			   }
+            if($active == 1)
+            {
+	              $ret = mysql_query("SELECT* FROM student where Name='$name'",$conn);
+	              if(! $ret)
+	               {
+				      die('Could not get data: ' . mysql_error());
+				   }
 
-			   $id;
-              while($row = mysql_fetch_array($ret,MYSQL_NUM))
-              {
-              		echo "<p>Details of $name are: <br>";
-              		$id= $row[0];
-                	echo " <table>
+				   $id;
+	              while($row = mysql_fetch_array($ret,MYSQL_NUM))
+	              {
+	              		echo "<p>Details of $name are: <br>";
+	              		$id= $row[0];
+	                	echo " <table>
 
-                	<tr>
-                		<td><h4>ID:</h4></td>
-                		<td>$row[0]</td>
-                		
-                	</tr>
+	                	<tr>
+	                		<td><h4>ID:</h4></td>
+	                		<td>$row[0]</td>
+	                		
+	                	</tr>
 
-                	<tr>
-                		<td><h4>Name:</h4></td>
-                		<td>$row[1]</td>
-                	</tr>
-                	<tr>
-                		<td><h4>Email:</h4></td>
-                		<td>$row[3]</td>
-                	</tr>
-                	<tr>
-                		<td><h4>Year of join:</h4></td>
-                		<td>$row[4]</td>
-                	</tr>
+	                	<tr>
+	                		<td><h4>Name:</h4></td>
+	                		<td>$row[1]</td>
+	                	</tr>
+	                	<tr>
+	                		<td><h4>Email:</h4></td>
+	                		<td>$row[3]</td>
+	                	</tr>
+	                	<tr>
+	                		<td><h4>Year of join:</h4></td>
+	                		<td>$row[4]</td>
+	                	</tr>
 
-                	<tr>
-                		<td><h4>Stream:</h4></td>
-                		<td>$row[5]</td>
-                	</tr>
-                	<tr>
-                		<td><h4>About:</h4></td>
-                		<td>$row[6]</td>
-                	</tr>
+	                	<tr>
+	                		<td><h4>Stream:</h4></td>
+	                		<td>$row[5]</td>
+	                	</tr>
+	                	<tr>
+	                		<td><h4>About:</h4></td>
+	                		<td>$row[6]</td>
+	                	</tr>
 
-                		
+	                		
 
 
-                	</table>";
-              }
+	                	</table>";
+	              }
 
-             	
-               $ret = mysql_query("SELECT* FROM student_course where S_ID='$id'",$conn);
-               echo "<h3>Courses :<h3><br>";
-               while($row = mysql_fetch_array($ret,MYSQL_NUM))
-              {
-              	
-              	echo "<a href>$row[1]</a>,";
-              }
+	             	
+	               $ret = mysql_query("SELECT* FROM student_course where S_ID='$id'",$conn);
+	               echo "<h3>Courses :<h3><br>";
+	               while($row = mysql_fetch_array($ret,MYSQL_NUM))
+	              {
+	              	$active = 1;
+	              	$name = $row[0];
+	              	echo "<a href='display.php'>$row[1] </a>";
 
+
+	              }
+	        }
+
+	        //COURSE DISPLAY
+	        else if($active == 2)
+	        {
+
+	              $ret = mysql_query("SELECT* FROM course where Name='$name'",$conn);
+	              if(! $ret)
+	               {
+				      die('Could not get data: ' . mysql_error());
+				   }
+
+				   while($row = mysql_fetch_array($ret,MYSQL_NUM))
+	              {
+	              		echo "<p>Details of $name are: <br>";
+	              		//$id= $row[0];
+	                	echo " <table>
+
+	                	<tr>
+	                		<td><h4>ID:</h4></td>
+	                		<td>$row[0]</td>
+	                		
+	                	</tr>
+
+	                	<tr>
+	                		<td><h4>Name:</h4></td>
+	                		<td>$row[1]</td>
+	                	</tr>
+	                	<tr>
+	                		<td><h4>Department:</h4></td>
+	                		<td>$row[2]</td>
+	                	</tr>
+	                	<tr>
+	                		<td><h4>Credit:</h4></td>
+	                		<td>$row[3]</td>
+	                	</tr>
+
+	                	<tr>
+	                		<td><h4>Description:</h4></td>
+	                		<td>$row[4]</td>
+	                	</tr>
+	                	<tr>
+	                		<td><h4>Avg_Rating:</h4></td>
+	                		<td>$row[5]</td>
+	                	</tr>
+
+	                		
+
+
+	                	</table>";
+	              }
+
+
+
+	        }
+
+	        //Feedback for the course
+
+	        else if($active == 3)
+	        {
+	        	
+	        }
 
 
   	 	
