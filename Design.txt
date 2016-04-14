@@ -5,7 +5,7 @@ HomePage:
 	-> User login ---> Main Content[2]
 	-> Info about Page
 	-> Creators Info
-									
+
 
 [1]	User Registration Page:
 		-> Username
@@ -25,17 +25,16 @@ HomePage:
 		-> Interests
 
 [1-1] Sign Up Result page:
-		-> Succesful registration Banner
+		-> Successful registration Banner
 		-> Add Courses
 		-> Add Friends
 		-> Settings
 
 [2-2] Course Add Page:
-		-> Select from course List 
+		-> Select from course List
 		-> Add Semester
 		-> Add Prof
 		-> Give Feedback
-
 
 
 Database Design:
@@ -53,7 +52,7 @@ Database Design:
 			Student:
 		+------------------------------------------------------------------------------------------------+
 		| ID | Name | Password(hash) | Email | Join Year | Stream | No. of Courses done | About |Semester|
-		+------------------------------------------------------------------------------------------------+                     
+		+------------------------------------------------------------------------------------------------+
 
 			Course:
 					+-------------------------------------------------------------------------------------------------------------------------------------					| ID | Name | Department | Description | Credits | Avg Rating |Comments	(this looks complex, we'll add if we have time later)| Is Offered?(current Semester)|teacher
@@ -64,14 +63,8 @@ Database Design:
 					| ID | Name | Department | About | Email | Avg Rating (keep this?)-Yeah |
 					+-----------------------------------------------------------------------+
 
-			Feedback: 
+			Feedback:
 					+----------------------------------------------------------------------------------+
 					| UniqueID | Student_FK | Course_FK | Year |Semester | Professor |Feedback | Rating|
 					+----------------------------------------------------------------------------------+
 					(Could also add upvote and downvote. Too much?)
-
-
-
-
-
-

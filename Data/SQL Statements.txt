@@ -1,0 +1,3 @@
+-- Student Table Creation
+CREATE TABLE `CourseMatch`.`Student` ( `ID` VARCHAR(10) NOT NULL , `Name` VARCHAR(50) NOT NULL , `Password` VARCHAR(50) NOT NULL , `Courses` VARCHAR(50) NOT NULL , `Stream` VARCHAR(50) NOT NULL , `Join_Year` SMALLINT(4) NOT NULL , `Phone No.` BIGINT(10) NOT NULL , `Email` VARCHAR(50) NOT NULL ) ENGINE = InnoDB;
+
