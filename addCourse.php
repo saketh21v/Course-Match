@@ -94,6 +94,7 @@
       pointer-events: none;
       font-size: 22px;
     }
+
     label .req {
       margin: 2px;
       color: #61C4FF;
@@ -142,6 +143,12 @@
       margin-bottom: 40px;
     }
 
+    .field-wrap-feedback{
+      position: relative;
+      margin-bottom: 40px;
+      /*height: 200px;*/
+    }
+
     .top-row:after {
       content: "";
       display: table;
@@ -186,48 +193,66 @@
     }
     </style>
 
-    <!-- PHP script to log in -->
+    <!-- PHP script to register -->
 <?php
-$ID = "ID";
-$psswd = "";
-
+$feedID;
+$ID;
+$Course;
+$Instructor;
+$Rating;
+$Year;
+$Semester;
+$Feedback;
+$fIds = array();
 $query = "";
-$correct = true;
 
 
+if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
+	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
+	  // Check connection
+	  if ($conn == false)
+	    {
+	        // header("Location: http://localhost/coursematch/temp/someError.html");
+	        die();
+	    }
 
-  function getLoc(){
-    $loc = $_SERVER['PHP_SELF'];
-    if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
-    $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
-    // Check connection
-    if (mysqli_connect_errno())
-      {
-          header("Location: http://localhost/coursematch/temp/someError.html");
-          die();
+      $ID = $_POST["ID"];
+      $Course = $_POST["Course"];
+      $Instructor = $_POST["Instructor"];
+      $Rating = $_POST["Rating"];
+      $Year = $_POST["Year"];
+      $Semester = $_POST["Semester"];
+      $Feedback = $_POST["Feedback"];
+
+
+      $a = 0;
+      $f = mysqli_query($conn, "SELECT ID FROM Feedback WHERE 1");
+
+      $x = 0;
+      while($row = mysqli_fetch_row($f)){
+        $fIDs[$x++] = $row[0];
+      }
+      $c = count($fIDs);
+      while(!$a){
+        $feedID = rand(1000000000, 9999999999);
+        for($x = 0; $x<$c; $x++){
+          if($feedID == $fIDs[$x]){
+            $a = 0;
+            break;
+          }
+          $a = 1;
+        }
       }
 
-      $GLOBALS['ID'] = $_POST["ID"];
-      $psswd = $_POST["psswd"];
+      $query = "INSERT INTO Feedback VALUES('".$feedID."','".$ID."','".$Course."','".$Instructor."','".$Rating."','".$Year."','".$Semester."','".$Feedback."',sysdate())";
+	     $l = mysqli_query($conn, $query);
+       $query = "INSERT INTO Student_Course VALUES('".$ID."','".$Course."')";
+       $l = mysqli_query($conn, $query);
+       mysqli_close($conn);
+        echo "Course Added";
+        die();
 
-      $query = 'SELECT Password FROM Student WHERE ID ="'.$GLOBALS['ID'].'"';
-
-      $l = mysqli_query($conn, $query);
-      if($l){
-        $row = mysqli_fetch_row($l);
-        $pass = $row[0];
-
-        if(strcmp($pass, $psswd) == 0){
-            $loc =  "http://localhost/coursematch/Course-Match/profile.php";
-        }
-
-    }else{
-          $correct = false;
-        }
-      mysqli_close($conn);
-    }
-    return $loc;
-  }
+	}
 ?>
 
   </head>
@@ -235,26 +260,60 @@ $correct = true;
   <div class="form">
         <div class="tab-content">
           <div id="signup">
-            <h1>Sign In</h1>
-            <?php if(!$correct) echo '<center><font color="red"><h5>*Check your credentials</h5></font></center>' ?>
+            <h1>Add New Course</h1>
 
-            <form name="loginForm" action=<?php echo '"'.getLoc().'"'?> method="post">
+            <form action="addCourse.php" method="post">
+              <input type="hidden" value=<?php if(!empty($_POST)) echo "'".$_POST["ID"]."'" ?> name="ID">
 
-            <div class="field-wrap">
-              <label>
-                ID<span class="req">*</span>
-              </label>
-              <input type="text" required autocomplete="off" name="ID"/>
+              <div class="field-wrap">
+                <label>
+                  Course<span class="req">*</span>
+                </label>
+                <input type="text" required autocomplete="off" name="Course"/>
+              </div>
+
+            <div class="top-row">
+              <div class="field-wrap">
+                <label>
+                  Semester<span class="req">*</span>
+                </label>
+                <input type="text" required autocomplete="off" name="Semester"/>
+              </div>
+
+              <div class="field-wrap">
+                <label>
+                  Year<span class="req">*</span>
+                </label>
+                <input type="text" required autocomplete="off" name="Year"/>
+              </div>
             </div>
 
-            <div class="field-wrap">
-              <label>
-                Password<span class="req">*</span>
-              </label>
-              <input type="password"required autocomplete="off" name="psswd"/>
-            </div>
+              <div class="top-row">
+                <div class="field-wrap">
+                  <label>
+                    Instructor<span class="req">*</span>
+                  </label>
+                  <input type="text" required autocomplete="off" name="Instructor"/>
+                </div>
 
-            <button type="submit" class="button button-block"/>Get Started</button>
+                <div class="field-wrap">
+                  <label>
+                    Rating <span class="req">*</span>
+                  </label>
+                  <input type="text"required autocomplete="off" name="Rating"/>
+                </div>
+              </div>
+
+              <div class="field-wrap-feedback">
+                <label>
+                  <div id="fd">Feedback <span class="req">*</span></div>
+                </label>
+                <textarea rows="2" cols="20" name="Feedback" wrap="hard">
+
+                </textarea>
+              </div>
+
+              <button type="submit" class="button button-block"/>Add Course</button>
 
             </form>
 
@@ -300,14 +359,6 @@ $correct = true;
       $(target).fadeIn(600);
   });
   //# sourceURL=pen.js
-
-  if(document.forms['loginForm']['action'].toString() != <?php echo '"http://localhost'.$_SERVER['PHP_SELF'].'"'?>){
-
-    document.forms['loginForm']['ID'].value = <?php echo '"'.$ID.'"' ?>;
-    document.forms['loginForm'].submit();
-  }
-
-
   </script>
   </body>
 </html>

@@ -1,28 +1,73 @@
 <!DOCTYPE html>
 <!-- saved from url=(0046)http://localhost/coursematch/temp/profile.html -->
 <html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <!-- CSS -->
+	<link rel="stylesheet" href="style.css" type="text/css" />
+
+	<!-- Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
+
+	<!-- jQuery -->
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+
+	<!-- jQuery Easing -->
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+
+	<!-- Functions -->
+	<script type="text/javascript" src="js/functions.js"></script>
 
 <?php
 
-$name = "Name";
-$email = "Email";
+$fName = "Name";
+$lName = "Name";
+$ID = "ID";
 $stream = "Stream";
 $joinYear = 2000;
+$email = "me@me.me";
+$phone = "";
 
-$query = "";
+$queryStudent = "";
+$queryStudentEmail = "";
+$queryStudentPhone = "";
+$queryStudentCourses = "";
+$numCourses = 0;
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
-      $email = $_POST["email"];
+      $ID = $_POST["ID"];
 	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
 
-      $query = "SELECT Name, Stream, Join_Year FROM Student WHERE Email='".$email."'";
+      $queryStudent = "SELECT First_Name,Last_Name, Stream, Join_Year FROM Student WHERE ID='".$ID."'";
+      $queryStudentEmail = "SELECT Email FROM Student_Email WHERE ID='".$ID."'";
+      $queryStudentPhone = "SELECT Phone_NO FROM Student_Phone_No WHERE ID='".$ID."'";
+      $queryStudentCourses = "SELECT Course FROM Student_Course WHERE ID='".$ID."'";
 
-      $l = mysqli_query($conn, $query);
+      $j = mysqli_query($conn, $queryStudent);
+      if($j){
+      	$row = mysqli_fetch_row($j);
+      	$fName = $row[0];
+        $lName = $row[1];
+      	$stream = $row[2];
+      	$joinYear = $row[3];
+      }
+      $k = mysqli_query($conn, $queryStudentEmail);
+      if($k){
+        $row = mysqli_fetch_row($k);
+        $email = $row[0];
+      }
+
+      $l = mysqli_query($conn, $queryStudentPhone);
       if($l){
-      	$row = mysqli_fetch_row($l);
-      	$name = $row[0];
-      	$stream = $row[1];
-      	$joinYear = $row[2];
+        $row = mysqli_fetch_row($l);
+        $phone = $row[0];
+      }
+
+      $m = mysqli_query($conn, $queryStudentCourses);
+      //$numCourses = mysqli_num_rows($m);
+
+      $courses = array();
+      $x = 0;
+      while(($row = mysqli_fetch_row($m))){
+        $courses[$x++] = $row[0];
       }
 	}
 else{
@@ -30,447 +75,31 @@ else{
 	die();
 	}
 ?>
-<style class="cp-pen-styles">body{
-	margin: 0 0 0 0;
-	background:url();
-	background-size:cover;
-	}
-.click{
-	  background: url('images/blockFace.jpeg');
-	  background-size:contain;
-	  position: relative;
-	    -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-	  	  					-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-			  box-shadow: 0px 0px 0px 2pt transparent;
-	  border: 0px solid #FFF;
-	  margin: auto;
-  cursor: pointer;
-	  	width:120px;
-	height:120px;
-	}
-.Profile{
-	margin-left:auto;
-	  z-index: 9999;
-	margin-right:auto;
-	text-align:center;
-		  	  					-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-	width:300px;
-	height:200px;
-		  border-radius:50%;
-	margin-top:34vh;
-	}
-	.clickProfile{
-	margin-left:auto;
-		border-top-left-radius:20px;
-	border-top-right-radius:20px;
-	margin-right:auto;
-	background:#191919;
-	text-align:center;
-	padding:20px 0px 20px 0px;
-		  	  					-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-			width:450px;
-	height:120px;
-	margin-top:24vh;
-	}
-.Img{
-	  background: url('images/blockFace.jpeg');
-	  background-size:contain;
-	  	  z-index: 9999;
-	  position: relative;
-	    -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-	  	  					-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.2s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.2s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.2s;
-			  box-shadow: 0px 0px 0px 2pt transparent;
-	  border: 0px solid #FFF;
-	  margin: auto;
-  cursor: pointer;
-	  	width:200px;
-	height:200px;
-	}
-		.clickPopUp{
-			position: relative;
-	background: #e74c3c;
-	display:none;
-		opacity:1;
-		width:450px;
-		height: 100px;
-		-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	margin-top:20px;
-	border-bottom-left-radius:20px;
-	border-bottom-right-radius:20px;
-	padding: 13px 0px 10px 0px;
-	font-size:18px;
-		}
-.PopUp {
-	position: relative;
-	background: #e74c3c;
-		width:300px;
-		opacity:0;
-				font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
-	font-weight: 700;
-	text-decoration:none;
-	text-transform:uppercase;
-	color:#FFF;
-			  	  					-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	margin-top:20px;
-	border-radius:20px;
-	padding: 13px 0px 10px 0px;
-	font-size:18px;
-}
-.PopUp:after, .clickPopUp:after {
-	bottom: 100%;
-	left: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(231, 76, 60, 0);
-	border-bottom-color: #e74c3c;
-	border-width: 10px;
-	margin-left: -10px;
-
-}
-.PopUp a, .clickPopUp a{
-		font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
-	font-weight: 700;
-	text-decoration:none;
-	text-transform:uppercase;
-	color:#FFF;
-	}
-.overlay{
-  background: rgba(0,0,0,.5);
-  position: absolute;
-  margin: auto;
-  width: 0px;
-  height: 0px;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  opacity: 0;
-  -webkit-transition: .3s ease;
-  transition: .3s ease;
-}
-
-.Img:hover .overlay, .click:hover .overlay{
-  opacity: 1;
-  width: 100%;
-  height: 100%;
-}
-
-.overlay span{
-  color: #fff;
-  font-family: 'Open Sans', sans-serif;
-  text-align: center;
-  position: absolute;
-  margin: auto;
-  width: 160px;
-  height: 30px;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-}
-
-.Img:hover .overlay span{
-  opacity: 1;
-  -webkit-transition: 1.3s ease;
-  transition: 1.3s ease;
-}
-.content{
-	padding-left: 15px; padding-right: 15px;
-	color:#FFF;
-	font-family: 'Open Sans', sans-serif;
-	}
-#logo {
-  width: 40px; /* required to center */
-  height: 40px;
-  	border-radius:50%;
-	margin-top:15px;
-		 margin-left:20px;
-		 margin-right:20px;
-  			  	  					-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-    fill: white;
-}
-#logo:hover{
-	background:#191919;
-	border-radius:50%;
-	 fill: #e74c3c;;
-	}
-	.clickPopUp h4{
-		margin-top:10px;
-		}
-		.buttons{
-			background:transprent;
-			display: inline;
-			cursor: pointer;
-			padding:20px;
-			margin:0;
-			-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-		border-top: 1px solid #891d1d;
-		border-left: 0px solid #891d1d;
-				}
-				.b{
-					border-bottom: 1px solid #891d1d;
-					}
-			.buttons:hover{
-				background:#FF7364;
-				border-left: 3px solid #891d1d;
-				box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
-				}
-
-				<!-- /////////////////////////////////////// -->
-.clickCC{
-	  background-size:contain;
-	  position: relative;
-	    -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-    -webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-    -moz-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-	transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-	box-shadow: 0px 0px 0px 2pt transparent;
-	  border: 0px solid #FFF;
-	  margin: auto;
-  cursor: pointer;
-	width:120px;
-	height:120px;
-	}
-
-.Courses{
-	  	position: relative;
-	  	border: 0px solid #FFF;
-	  	margin: auto;
-  		cursor: pointer;
-	}
-.clickCourses{
-	position: absolute;
-	background: #81B7D4;
-	display:none;
-	opacity:1;
-	width:200px;
-	-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	margin-top:45px;
-	border-bottom-left-radius:20px;
-	border-bottom-right-radius:20px;
-	padding: 10px 0px 10px 0px;
-	font-size:18px;
-}
-.clickCourses:after {
-	bottom: 100%;
-	left: 70%;
-	border: solid transparent;
-	content: "";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(231, 76, 60, 0);
-	border-bottom-color: #e74c3c;
-	border-width: 10px;
-	margin-left: -10px;
-
-}
-.clickCourses a{
-		font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
-	font-weight: 700;
-	text-decoration:none;
-	text-transform:uppercase;
-	color:#FFF;
-	}
-
-	ul#menu{
-    list-style-type: none;
-    margin: 0%;
-    padding: 0;
-    overflow: hidden;
-}
-
-ul.list{
-	list-style-type: none;
-	height: 150px;
-	overflow: hidden;
-	overflow-y: scroll;
-
-}
-
-li {
-		display: block;
-		cursor: pointer;
-}
-
-
-li.menuL {
-    float: left;
-}
-
-li.menuL a {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-				<!-- /////////////////////////////////////// -->
-
-.clickPP{
-	  background-size:contain;
-	  position: relative;
-	    -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-    -webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-    -moz-transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-	transition:cubic-bezier(.34,.43,0,1.02) 0.5s;
-	box-shadow: 0px 0px 0px 2pt transparent;
-	  border: 0px solid #FFF;
-	  margin: auto;
-  cursor: pointer;
-	width:120px;
-	height:220px;
-	}
-
-.Portfolio{
-	  	position: relative;
-	  	border: 0px solid #FFF;
-	  	margin: auto;
-  		cursor: pointer;
-	}
-.clickPortfolio{
-	position: absolute;
-	background: #81B7D4;
-	display:none;
-	opacity:1;
-	width:450px;
-	-webkit-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	-moz-transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	transition:cubic-bezier(.34,.43,0,1.02) 0.4s;
-	margin-top:45px;
-	border-bottom-left-radius:20px;
-	border-bottom-right-radius:20px;
-	padding: 10px 0px 10px 0px;
-	font-size:18px;
-}
-.clickPortfolio:after {
-	bottom: 100%;
-	left: 70%;
-	border: solid transparent;
-	content: "";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(231, 76, 60, 0);
-	border-bottom-color: #e74c3c;
-	border-width: 10px;
-	margin-left: -10px;
-
-}
-.clickPortfolio a{
-		font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
-	font-weight: 700;
-	text-decoration:none;
-	text-transform:uppercase;
-	color:#FFF;
-	}
-
-
-.SearchCourses{
-  font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
-  font-weight: 700;
-  text-decoration:none;
-  text-transform:uppercase;
-  color:#FFF;
-  left: 10%;
-  up: 10%;
-  down: 70%;
-}
-
-#boxL{
-  margin-left: 5%;
-  margin-top: 5%;
-  width: 300px;
-  height: 50px;
-}
-
-.container-1{
-  width: 300px;
-  vertical-align: middle;
-  white-space: nowrap;
-  position: relative;
-}
-.container-1 input#search{
-  width: 200px;
-  height: 30px;
-  background: #2b303b;
-  border: none;
-  font-size: 10pt;
-  font-weight: 600;
-  float: middle;
-  color: #019AEC;
-  padding-left: 30px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-}
-
-.container-1 .icon{
-  position: absolute;
-  top: 0%;
-  margin-left: 17px;
-  margin-top: 0px;
-  z-index: 1;
-  color: #4f5b66;
-}
-
-.container-1 input#search:hover, .container-1 input#search:focus, .container-1 input#search:active{
-    outline:none;
-    background: #055580;
-  }
-
-</style>
-<style type="text/css"></style>
-
-
 </head>
 <body>
 
-<div class="container-1">
-<form action="localhost/coursematch/Course-Match/SearchFrnds.php" target="_blank" method="post">
-    <radiogroup>
+<div id="search-form">
+  <form class="form-container" action="">
+    <input type="text" class="search-field" value="Type search text here..." />
+    <div class="submit-container">
+      <input type="submit" value="" class="submit" /></br>
+    </div>
+    <div id="radio">
+      <radiogroup>
         <input type="radio" name="SearchType" checked="checked">Courses</input></br>
         <input type="radio" name="SearchType" >Friends</input></br>
-        <input type="search" id="search" placeholder="Search..." />
-        <input type="submit"/>
-</form>
+      </radiogroup>
+    </div>
+  </form>
+</div>
+
+<div id="CourseAdd">
+  <form action="./addCourse.php" method="POST" target="_blank">
+    <div id="addBtnContainer">
+			<input type="hidden" value=<?php if(!empty($_POST)) echo "'".$_POST["ID"]."'" ?> name="ID">
+      <input type="submit" value="Add New Course" class="addBtn"/>
+    </div>
+  </form>
 </div>
 
 <div class="ACon">
@@ -481,12 +110,10 @@ li.menuL a {
     </div>
 </div>
 
-
-
 <div class="PopUp" style="opacity: 0; margin-top: 0px;">Open Profile</div>
 <div class="clickPopUp">
 <ul id=menu>
-<h4><a class="username" href=""><?php echo $email ?></a></h4>
+<h4><a class="username" href=""><?php echo $ID ?></a></h4>
 
 <div class="Courses">
 	<li class=menuL><h5 class="buttons"><a class="username" href="#Courses">Courses</a></h5></li>
@@ -494,11 +121,17 @@ li.menuL a {
 
 <div class="clickCourses">
 <ul class="list">
-<li><h5 ><a class="username">Por</a></h5></li>
-<li><h5 ><a class="username">Por</a></h5></li>
-<li><h5 ><a class="username">Por</a></h5></li>
-<li><h5 ><a class="username">Por</a></h5></li>
-<li><h5 ><a class="username">P</a></h5></li>
+<?php
+if(count($courses) != 0){
+  for($x=0;$x<count($courses);$x++){
+    echo '<li><h5 ><a class="username">'.$courses[$x].'</a></h5></li>';
+  }
+}
+else{
+  echo '<li><h5 ><a class="username">Sorry! No Courses.</a></h5></li>';
+}
+?>
+<!-- <li><h5 ><a class="username">Por</a></h5></li> -->
 </ul>
 </div>
 
@@ -506,8 +139,8 @@ li.menuL a {
 	<li class=menuL><h5 class="buttons"><a class="username" href="#Portfolio">Portfolio</a></h5></li>
 	<div class="clickPortfolio">
 		<ul class="list">
-			<li><h5><a class="username">Name      : <?php echo $name?></a></h5></li>
-			<li><h5><a class="username">Email     : <?php echo $email?></a></h5></li>
+			<li><h5><a class="username">Name      : <?php echo $fName.' '.$lName?></a></h5></li>
+			<li><h5><a class="username">ID     : <?php echo $ID?></a></h5></li>
 			<li><h5><a class="username">Stream    : <?php echo $stream?></a></h5></li>
 			<li><h5><a class="username">Join Year : <?php echo $joinYear?></a></h5></li>
 		</ul>
@@ -626,6 +259,5 @@ $(document).ready(function () {
 
 
 });
-//# sourceURL=pen.js
 </script>
 </body></html>
