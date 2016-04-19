@@ -203,7 +203,7 @@ $query = "";
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
-	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
+	  $conn = mysqli_connect("localhost", "root", "", "coursematch");
 	  // Check connection
 	  if (mysqli_connect_errno())
 	    {

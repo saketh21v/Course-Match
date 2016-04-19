@@ -1,12 +1,11 @@
 
-<?php 
-    session_start();
- ?>
 <!DOCTYPE html>
-
   <html class=''>
   <head>
+  <?php session_start() ?>
+
     <title>Course-Match Registration</title>
+
       <meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="canonical" href="http://codepen.io/ehermanson/pen/KwKWEv" />
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
     <link rel='stylesheet prefetch' href='//codepen.io/assets/reset/normalize.css'>
@@ -188,7 +187,6 @@
       margin-top: -20px;
       text-align: right;
     }
-    
     </style>
   </head>
   <body>
@@ -197,141 +195,101 @@
   	 <?php  
   	 	
 
-  	 	//$this = $_SESSION['active'];
-
-	
-
-    	 $name = $_GET['studentName'];
-    
-     /*{
-      if(isset($_SESSION["Name"]))
-          $name = $_SESSION["Name"];
-      
-      if(isset($_SESSION["Active"]))
-      	 $active = $_SESSION["Active"];
-      }*/
-
+      $name = $_SESSION["Name"];
   	 	 $conn = mysql_connect('localhost','root','');    
             if(!$conn)
                 die("Couldnot connect");
             mysql_select_db("coursematch");
 
-            //Student Details
-
             
-                
-                //echo "$name $active";
-                //$name = 'zxcvas';
-                /*Name*/
-	              $ret = mysql_query("SELECT* FROM student where First_Name='$name'",$conn);
-
-	              if(! $ret)
-	               {
-				      die('Could not get data: ' . mysql_error());
-				   }
-
 
 				   
+          $maindisp = 1;
+          $count = 1;
+          $id;
 
-				  
-				  $id;
-				  if(mysql_num_rows($ret)> 0)
-				  {
-				  	
-		              while($row = mysql_fetch_array($ret,MYSQL_NUM))
-		              {
+               $ret = mysql_query("SELECT* FROM feedback where Course='$name'",$conn);
+                if(! $ret)
+                {
+                  die('Could not get data: ' . mysql_error());
+                }
+                $ret2 = mysql_query("SELECT* FROM Course where Name='$name'",$conn);
+                if(! $ret)
+                {
+                  die('Could not get data: ' . mysql_error());
+                }
 
-		              		
-		              		echo "<p>Details of $name are: <br>";
-		              		$id = $row[0];
+                $row2 = mysql_fetch_row($ret2);
+                $avgRate = $row2[3];
+                 while($row = mysql_fetch_array($ret,MYSQL_NUM))
+                {
+                    if($maindisp == 1)
+                    {
+                      //echo "Yo";
+                      echo "<table>
+                        <tr>
 
-		              		/*Email*/
-		              		 $ret2 = mysql_query("SELECT* FROM student_email where ID='$id'",$conn);
+                        <td>Course: </td>
+                        <td>$name</td>
+                        </tr>
+                        <tr>
+                          <td>Year: </td>
+                          <td>$row[4]</td>
+                        </tr>
+                        <tr>
+                        <td>Average Rating: </td>
+                        <td>$avgRate</td>
+                        </tr>
 
-				              if(! $ret)
-				               {
-							      die('Could not get data: ' . mysql_error());
-							   }
+                        </table>
 
-							   $row2 = mysql_fetch_row($ret2);
-		                	echo " <table>
-
-		                	<tr>
-		                		<td><h4>ID:</h4></td>
-		                		<td>$row[0]</td>
-		                		
-		                	</tr>
-
-		                	<tr>
-		                		<td><h4>Name:</h4></td>
-		                		<td>$row[4] $row[5]</td>
-		                	</tr>
-		                	<tr>
-		                		<td><h4>Email:</h4></td>
-		                		<td>$row2[1]</td>
-		                	</tr>
-		                	<tr>
-		                		<td><h4>Year of join:</h4></td>
-		                		<td>$row[3]</td>
-		                	</tr>
-
-		                	<tr>
-		                		<td><h4>Stream:</h4></td>
-		                		<td>$row[2]</td>
-		                	</tr>
-		                	
-
-		                		
+                        <h3>FEEDBACK</h3>";
+                        $maindisp = -1;
+                        
+                      }
+                        //echo $count;
+                        $id = $row[1];
+                        $ret3 = mysql_query("SELECT* FROM student WHERE ID='$id'");
+                        $row3 = mysql_fetch_row($ret3);
 
 
-		                	</table>";
-		              }
-		         }
-		         else
-		         {
-		         	echo "Not Found!";
-		         	exit();
-		         }
-	             	
-	               $ret = mysql_query("SELECT* FROM student_course where ID='$id'",$conn);
-	               echo "<h3>Courses :<h3><br>";
-                 $out=0;
-	               while($row = mysql_fetch_array($ret,MYSQL_NUM))
-	               {
-	              	if($out == 0)
-                  {
-                    //$_SESSION["Name"] = $row[1];
-                    //$_SESSION["Active"] = 2;
-                    //$out++;
+                        echo "<hr class='/'>";
+                        echo  "<table>
+
+                        <tr>
+
+                        <td>Name: </td>
+                        <td>$row3[4] $row3[5] </td>
+                        </tr>
+                        <tr>
+                        <td> feedback: </td>
+                        <td><p>$row[6]</p></td>
+                        </tr>
+                        <tr>
+                        <td>Rating: </td>
+                        <td>$row[3]</td>
+                        </tr>
+
+
+                        </table>";
+
+
+                      
+
+                      
+                    
                   }
-                  $course = "course";
-	              	echo "<a href='display2.php?courseName=$row[1]&courseActive=1'>$row[1] </a>";
-
-                  //echo $_SESSION['active'];
-	              }
-
-	              
-                //$_SESSION["Name"] = "CA";
-                
-
-	        
-
-	        
-
-	        //Feedback for the course
 
 
-
-
-
+          
 
 
   	 	
   	 ?>
 
   	 </div>
-
-       
+  
+  
 
 
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

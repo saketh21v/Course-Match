@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <!-- saved from url=(0046)http://localhost/coursematch/temp/profile.html -->
+
+
+<?php session_start(); ?>
 <html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
   <!-- CSS -->
 	<link rel="stylesheet" href="style.css" type="text/css" />
@@ -34,7 +37,7 @@ $numCourses = 0;
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
       $ID = $_POST["ID"];
-	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
+	  $conn = mysqli_connect("localhost", "root", "", "coursematch");
 
       $queryStudent = "SELECT First_Name,Last_Name, Stream, Join_Year FROM Student WHERE ID='".$ID."'";
       $queryStudentEmail = "SELECT Email FROM Student_Email WHERE ID='".$ID."'";
@@ -78,20 +81,65 @@ else{
 </head>
 <body>
 
+<!-- Search Boxes -->
+
 <div id="search-form">
-  <form class="form-container" action="">
-    <input type="text" class="search-field" value="Type search text here..." />
+  <form class="form-container">
+    <input type="text" id = "courseName" class="search-field" value="Type search text here..." />
     <div class="submit-container">
-      <input type="submit" value="" class="submit" /></br>
+      <a href="" id="submit1"><input type="button" value="" class="submit" onclick="click2()" /></br></a>
     </div>
     <div id="radio">
       <radiogroup>
-        <input type="radio" name="SearchType" checked="checked">Courses</input></br>
-        <input type="radio" name="SearchType" >Friends</input></br>
+        <input type="radio" id="SearchType1" checked="checked">Courses</input></br>
+        
       </radiogroup>
     </div>
   </form>
 </div>
+
+<div id="search-form">
+  <form class="form-container">
+    <input type="text" id = "friendName" class="search-field" value="Type search text here..." />
+    <div class="submit-container">
+      <a href="" id = "submit2"><input type="button" value="" class="submit" onclick="click1()" /></br></a>
+    </div>
+    <div id="radio">
+      <radiogroup>
+        <input type="radio" id="SearchType1" checked="checked">Friends</input></br>
+      
+      </radiogroup>
+    </div>
+  </form>
+</div>
+
+
+<!-- JAVASCRIPT for search -->
+
+<script type="text/javascript">
+  
+  function click1()
+    {
+      var x = document.getElementById("friendName").value;
+      var y = "display.php?studentName=";
+      var res = y.concat(x);
+      //alert(res);
+      document.getElementById("submit2").setAttribute("href",res);
+    }
+
+    function click2()
+    {
+      var x = document.getElementById("courseName").value;
+      var y = "display2.php?courseName=";
+      var res = y.concat(x);
+     //alert(res);
+     document.getElementById("submit2").setAttribute("href",res);
+    }
+
+</script>
+
+
+
 
 <div id="CourseAdd">
   <form action="./addCourse.php" method="POST" target="_blank">

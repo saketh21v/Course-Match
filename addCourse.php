@@ -208,7 +208,7 @@ $query = "";
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
-	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
+	  $conn = mysqli_connect("localhost", "root", "", "coursematch");
 	  // Check connection
 	  if ($conn == false)
 	    {
