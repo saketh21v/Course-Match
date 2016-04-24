@@ -192,36 +192,31 @@
   <body>
 
   <div class = "form">
-  	 <?php  
-  	 	
+     <?php
 
       $name = $_SESSION["Name"];
-  	 	 $conn = mysql_connect('localhost','root','');    
+       $conn = mysqli_connect('localhost','root','','coursematch');
             if(!$conn)
                 die("Couldnot connect");
-            mysql_select_db("coursematch");
 
-            
-
-				   
           $maindisp = 1;
           $count = 1;
           $id;
 
-               $ret = mysql_query("SELECT* FROM feedback where Course='$name'",$conn);
+               $ret = mysqli_query($conn,"SELECT* FROM feedback where Course='$name'");
                 if(! $ret)
                 {
                   die('Could not get data: ' . mysql_error());
                 }
-                $ret2 = mysql_query("SELECT* FROM Course where Name='$name'",$conn);
+                $ret2 = mysqli_query($conn, "SELECT* FROM Course where Name='$name'");
                 if(! $ret)
                 {
                   die('Could not get data: ' . mysql_error());
                 }
 
-                $row2 = mysql_fetch_row($ret2);
+                $row2 = mysqli_fetch_row($ret2);
                 $avgRate = $row2[3];
-                 while($row = mysql_fetch_array($ret,MYSQL_NUM))
+                 while($row = mysqli_fetch_row($ret))
                 {
                     if($maindisp == 1)
                     {
@@ -245,12 +240,12 @@
 
                         <h3>FEEDBACK</h3>";
                         $maindisp = -1;
-                        
+
                       }
                         //echo $count;
                         $id = $row[1];
-                        $ret3 = mysql_query("SELECT* FROM student WHERE ID='$id'");
-                        $row3 = mysql_fetch_row($ret3);
+                        $ret3 = mysqli_query($conn, "SELECT* FROM student WHERE ID='$id'");
+                        $row3 = mysqli_fetch_row($ret3);
 
 
                         echo "<hr class='/'>";
@@ -259,37 +254,22 @@
                         <tr>
 
                         <td>Name: </td>
-                        <td>$row3[4] $row3[5] </td>
+                        <td>$row3[0] $row3[1] </td>
                         </tr>
                         <tr>
                         <td> feedback: </td>
-                        <td><p>$row[6]</p></td>
+                        <td><p>$row[7]</p></td>
                         </tr>
                         <tr>
                         <td>Rating: </td>
                         <td>$row[3]</td>
                         </tr>
 
-
                         </table>";
-
-
-                      
-
-                      
-                    
                   }
+     ?>
 
-
-          
-
-
-  	 	
-  	 ?>
-
-  	 </div>
-  
-  
+     </div>
 
 
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

@@ -87,8 +87,8 @@ else{
 <!-- Search Boxes  action="./try1.php" method="GET" target="_blank" -->
 
 <div id="search-form">
-  <form name="searchForm" class="form-container" action="qwert" onsubmit="return clickSearch()">
-    <input type="text" id = "courseName" class="search-field" placeholder="Search here..." name="courseName"/>
+  <form name="searchForm" class="form-container" action="qwert" onsubmit="return clickSearch()" target="_blank" method="get">
+    <input type="text" id = "searchForValue" class="search-field" placeholder="Search here..." name="searchForValue"/>
     <div class="submit-container">
       <input type="submit" value="" class="submit" /></br>
     </div>

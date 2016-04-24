@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
   <html class=''>
   <head>
@@ -187,6 +186,7 @@
     </style>
 
     <!-- PHP script to register -->
+
 <?php
 $ID = rand(1000000000, 9999999999);
 $fName = "";
@@ -195,21 +195,15 @@ $psswd = "";
 $email = "";
 $jYear = 2016;
 $stream = "";
-$nCourses = 0;
 $About = "";
 
+echo "<!-- Commento 201-->";
 
+$registered = false;
 $query = "";
-
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
 	  $conn = mysqli_connect("localhost", "root", "", "coursematch");
-	  // Check connection
-	  if (mysqli_connect_errno())
-	    {
-	        header("Location: http://localhost/coursematch/temp/someError.html");
-	        die();
-	    }
 
       $ID = $_POST["ID"];
 	    $fName = $_POST["fName"];
@@ -219,20 +213,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
       $jYear = $_POST["jYear"];
       $stream = $_POST["stream"];
 
-	    $query = "INSERT INTO student VALUES(\"".$ID."\",\"".$fName." ".$lName."\", \"".$psswd."\", \"".$email."\", \"".$jYear."\", \"".$stream."\", \"".$nCourses."\", \"".$About."\")";
-	    $l = mysqli_query($conn, $query);
-	    if($l == 1){
-	    		header("Location: http://localhost/coursematch/temp/profile.html");
-	    		die();
+	    $queryMain = "INSERT INTO student VALUES('".$fName."','".$lName."', '".$ID."', '".$psswd."', '".$stream."', '".$jYear."')";
+      $queryEmail = "INSERT INTO student_email VALUES('".$ID."', '".$email."')";
+
+      $l = mysqli_query($conn, $queryMain);
+
+      if($l){
+        echo "<script>alert('lled')</script>";
+        $registered = true;
 	    }
 	    else{
-	    	header("Location: http://localhost/coursematch/temp/someError.html");
-	        die();	
+	    	// header("Location: http://localhost/coursematch/temp/someError.html");
+        echo "Dead";
+        echo $l;
+	      die();
 	    }
       mysqli_close($conn);
 	}
 ?>
-
+<!-- PHP script ends. -->
   </head>
   <body>
   <div class="form">
@@ -240,8 +239,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
           <div id="signup">
             <h1>Sign Up</h1>
 
-            <form action="registration.php" method="post">
-            
+            <form action= "registration.php" method="post" name="regForm" id="regForm">
             <div class="field-wrap">
               <label>
                 ID<span class="req">*</span>
@@ -265,7 +263,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
               </div>
             </div>
 
-
             <div class="field-wrap">
               <label>
                 Email Address<span class="req">*</span>
@@ -279,7 +276,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
               </label>
               <input type="password"required autocomplete="off" name="psswd"/>
             </div>
-            
+
             <div class="top-row">
               <div class="field-wrap">
                 <label>
@@ -295,12 +292,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
                 <input type="text"required autocomplete="off" name="stream"/>
               </div>
             </div>
-
-
-            <button type="submit" class="button button-block"/>Get Started</button>
-
+            <button type="submit" class="button button-block" id="submitButton"/>Get Started</button>
             </form>
-
           </div>
 
           <div id="login">
@@ -311,6 +304,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
         </div><!-- tab-content -->
 
   </div> <!-- /form -->
+
+  <form action="./profile.php" method="post">
+    <input type="submit" name='sub' id="sub"/>
+    <input type="hidden" value="<?php echo $ID ?>" name="ID"/>
+    <input type="hidden" value="<?php echo $fName ?>" name="fName"/>
+    <input type="hidden" value="<?php echo $lName ?>" name="lName"/>
+    <input type="hidden" value="<?php echo $email ?>" name="email"/>
+    <input type="hidden" value="<?php echo $psswd ?>" name="psswd"/>
+    <input type="hidden" value="<?php echo $stream ?>" name="stream"/>
+    <input type="hidden" value="<?php echo $jYear ?>" name="jYear"/>
+  </form>
+
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script>$('.form').find('input, textarea').on('keyup blur focus', function (e) {
       var $this = $(this), label = $this.prev('label');
@@ -334,6 +339,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
           }
       }
   });
+
   $('.tab a').on('click', function (e) {
       e.preventDefault();
       $(this).parent().addClass('active');
@@ -342,6 +348,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
       $('.tab-content > div').not(target).hide();
       $(target).fadeIn(600);
   });
+
+  var reg = <?php echo $registered ?>;
+  // document.forms['regForm'].setAttribute('action', 'profile.php');
+
+  alert(reg);
+  if(reg == 1){
+    alert(reg);
+    document.getElementById("sub").click();
+  }
+
   //# sourceURL=pen.js
   </script>
   </body>

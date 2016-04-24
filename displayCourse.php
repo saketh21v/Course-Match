@@ -192,25 +192,25 @@
   <body>
 
   <div class = "form">
-  	 <?php  
-  	 	
+     <?php
+
 
      // $name = $_SESSION["Name"];
-  	 	 $conn = mysql_connect('localhost','root','');    
+       $conn = mysqli_connect('localhost','root','', 'coursematch');
             if(!$conn)
                 die("Couldnot connect");
-            mysql_select_db("coursematch");
+            // mysql_select_db("coursematch");
 
-            
 
-		  if(isset($_GET['courseName']))
+
+      if(isset($_GET['searchForValue']))
      {
       //echo "Yo";
 
-      $name=$_GET['courseName'];
+      $name=$_GET['searchForValue'];
      // $active = 2;
     }
-      
+
       else
 
       {
@@ -220,19 +220,19 @@
 
      // echo $name;
 
-      $ret = mysql_query("SELECT* FROM course where Name='$name'",$conn);
+      $ret = mysqli_query($conn,"SELECT* FROM course where Name='$name'");
             if(! $ret)
              {
               die('Could not get data: ' . mysql_error());
               }
 
-           while($row = mysql_fetch_array($ret,MYSQL_NUM))
+           while($row = mysqli_fetch_row($ret))
                 {
                     echo "<p>Details of $name are: <br>";
                     //$id= $row[0];
                     echo " <table>
 
-                    
+
 
                     <tr>
                       <td><h4>Name:</h4></td>
@@ -258,29 +258,29 @@
                       <td>$row[3]</td>
                     </tr>
 
-                      
+
 
 
                     </table>";
                 }
 
-                echo "<a href='display3.php'>Click to view course Feedback</a>";
+                echo "<a href='displayFeedback.php'>Click to view course Feedback</a>";
                 $_SESSION["Active"] = 3;
-                
+
                 $_SESSION["Name"] = $name;
 
-          
 
 
-          
 
 
-  	 	
-  	 ?>
 
-  	 </div>
-  
-  
+
+
+     ?>
+
+     </div>
+
+
 
 
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

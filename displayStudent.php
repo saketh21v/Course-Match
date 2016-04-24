@@ -1,5 +1,5 @@
 
-<?php 
+<?php
     session_start();
  ?>
 <!DOCTYPE html>
@@ -188,150 +188,128 @@
       margin-top: -20px;
       text-align: right;
     }
-    
+
     </style>
   </head>
   <body>
 
   <div class = "form">
-  	 <?php  
-  	 	
+     <?php
 
-  	 	//$this = $_SESSION['active'];
 
-	
+      //$this = $_SESSION['active'];
 
-    	 $name = $_GET['studentName'];
-    
+
+
+       $name = $_GET['searchForValue'];
+
      /*{
       if(isset($_SESSION["Name"]))
           $name = $_SESSION["Name"];
-      
+
       if(isset($_SESSION["Active"]))
-      	 $active = $_SESSION["Active"];
+         $active = $_SESSION["Active"];
       }*/
 
-  	 	 $conn = mysql_connect('localhost','root','');    
+       $conn = mysqli_connect('localhost','root','', 'coursematch');
             if(!$conn)
                 die("Couldnot connect");
-            mysql_select_db("coursematch");
 
             //Student Details
 
-            
-                
+
+
                 //echo "$name $active";
                 //$name = 'zxcvas';
                 /*Name*/
-	              $ret = mysql_query("SELECT* FROM student where First_Name='$name'",$conn);
+                $ret = mysqli_query($conn,"SELECT* FROM student where First_Name='$name'");
 
-	              if(! $ret)
-	               {
-				      die('Could not get data: ' . mysql_error());
-				   }
+                if(!$ret)
+                 {
+                   die('Could not get data: ' . mysql_error());
+                 }
 
+          $id;
+          if(mysqli_num_rows($ret)> 0)
+          {
 
-				   
-
-				  
-				  $id;
-				  if(mysql_num_rows($ret)> 0)
-				  {
-				  	
-		              while($row = mysql_fetch_array($ret,MYSQL_NUM))
-		              {
-
-		              		
-		              		echo "<p>Details of $name are: <br>";
-		              		$id = $row[0];
-
-		              		/*Email*/
-		              		 $ret2 = mysql_query("SELECT* FROM student_email where ID='$id'",$conn);
-
-				              if(! $ret)
-				               {
-							      die('Could not get data: ' . mysql_error());
-							   }
-
-							   $row2 = mysql_fetch_row($ret2);
-		                	echo " <table>
-
-		                	<tr>
-		                		<td><h4>ID:</h4></td>
-		                		<td>$row[0]</td>
-		                		
-		                	</tr>
-
-		                	<tr>
-		                		<td><h4>Name:</h4></td>
-		                		<td>$row[4] $row[5]</td>
-		                	</tr>
-		                	<tr>
-		                		<td><h4>Email:</h4></td>
-		                		<td>$row2[1]</td>
-		                	</tr>
-		                	<tr>
-		                		<td><h4>Year of join:</h4></td>
-		                		<td>$row[3]</td>
-		                	</tr>
-
-		                	<tr>
-		                		<td><h4>Stream:</h4></td>
-		                		<td>$row[2]</td>
-		                	</tr>
-		                	
-
-		                		
+                  while($row = mysqli_fetch_row($ret))
+                  {
 
 
-		                	</table>";
-		              }
-		         }
-		         else
-		         {
-		         	echo "Not Found!";
-		         	exit();
-		         }
-	             	
-	               $ret = mysql_query("SELECT* FROM student_course where ID='$id'",$conn);
-	               echo "<h3>Courses :<h3><br>";
+                      echo "<p>Details of $name are: <br>";
+                      $id = $row[2];
+
+                      /*Email*/
+                       $ret2 = mysqli_query($conn,"SELECT* FROM student_email where ID='$id'");
+
+                      if(! $ret)
+                       {
+                    die('Could not get data: ' . mysql_error());
+                 }
+
+                 $row2 = mysqli_fetch_row($ret2);
+                      echo " <table>
+
+                      <tr>
+                        <td><h4>ID:</h4></td>
+                        <td>$row[2]</td>
+
+                      </tr>
+
+                      <tr>
+                        <td><h4>Name:</h4></td>
+                        <td>$row[0] $row[1]</td>
+                      </tr>
+                      <tr>
+                        <td><h4>Email:</h4></td>
+                        <td>$row2[1]</td>
+                      </tr>
+                      <tr>
+                        <td><h4>Year of join:</h4></td>
+                        <td>$row[5]</td>
+                      </tr>
+
+                      <tr>
+                        <td><h4>Stream:</h4></td>
+                        <td>$row[4]</td>
+                      </tr>
+
+
+
+
+
+                      </table>";
+                  }
+             }
+             else
+             {
+              echo "Not Found!";
+              exit();
+             }
+
+                 $ret = mysqli_query($conn, "SELECT* FROM student_course where ID='$id'");
+                 echo "<h3>Courses :<h3><br>";
                  $out=0;
-	               while($row = mysql_fetch_array($ret,MYSQL_NUM))
-	               {
-	              	if($out == 0)
+                 while($row = mysqli_fetch_row($ret))
+                 {
+                  if($out == 0)
                   {
                     //$_SESSION["Name"] = $row[1];
                     //$_SESSION["Active"] = 2;
                     //$out++;
                   }
                   $course = "course";
-	              	echo "<a href='display2.php?courseName=$row[1]&courseActive=1'>$row[1] </a>";
+                  echo "<a href='displayCourse.php?searchForValue=$row[1]&courseActive=1'>$row[1] </a>";
 
                   //echo $_SESSION['active'];
-	              }
+                }
 
-	              
-                //$_SESSION["Name"] = "CA";
-                
+     ?>
 
-	        
-
-	        
-
-	        //Feedback for the course
+     </div>
 
 
-
-
-
-
-
-  	 	
-  	 ?>
-
-  	 </div>
-
-       
 
 
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

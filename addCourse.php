@@ -208,7 +208,7 @@ $query = "";
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
-	  $conn = mysqli_connect("localhost", "root", "", "coursematch");
+	  $conn = mysqli_connect("localhost", "User", "userme", "coursematch");
 	  // Check connection
 	  if ($conn == false)
 	    {
@@ -269,7 +269,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
                 <label>
                   Course<span class="req">*</span>
                 </label>
-                <input type="text" required autocomplete="off" name="Course"/>
+                <input type="text" required autocomplete="on" name="Course"/>
               </div>
 
             <div class="top-row">
@@ -277,14 +277,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
                 <label>
                   Semester<span class="req">*</span>
                 </label>
-                <input type="text" required autocomplete="off" name="Semester"/>
+                <input type="text" required autocomplete="on" name="Semester"/>
               </div>
 
               <div class="field-wrap">
                 <label>
                   Year<span class="req">*</span>
                 </label>
-                <input type="text" required autocomplete="off" name="Year"/>
+                <input type="text" required autocomplete="on" name="Year"/>
               </div>
             </div>
 
@@ -293,14 +293,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
                   <label>
                     Instructor<span class="req">*</span>
                   </label>
-                  <input type="text" required autocomplete="off" name="Instructor"/>
+                  <input type="text" required autocomplete="on" name="Instructor"/>
                 </div>
 
                 <div class="field-wrap">
                   <label>
                     Rating <span class="req">*</span>
                   </label>
-                  <input type="text"required autocomplete="off" name="Rating"/>
+                  <input type="text"required autocomplete="on" name="Rating"/>
                 </div>
               </div>
 
@@ -321,12 +321,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
 
           <div id="login">
             // Not Needed
-
           </div>
-
         </div><!-- tab-content -->
+  </div> 
 
-  </div> <!-- /form -->
+
   <script src='//dmnbd74khqk5q.cloudfront.net/assets/common/stopExecutionOnTimeout.js?t=1'></script><script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script>$('.form').find('input, textarea').on('keyup blur focus', function (e) {
       var $this = $(this), label = $this.prev('label');
