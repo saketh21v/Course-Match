@@ -19,7 +19,7 @@
     }
 
     body {
-      background: #AB4F4F;
+      background: #5F6E76;
       font-family: 'Titillium Web', sans-serif;
     }
 
@@ -34,7 +34,7 @@
     }
 
     .form {
-      background: rgba(170,46,46, 0.9);
+      background: #B9ADA8;
       padding: 40px;
       max-width: 600px;
       margin: 40px auto;
@@ -57,7 +57,7 @@
       text-decoration: none;
       padding: 15px;
       background: #33B2FF;
-      color: #33B2FF;
+      color: #DC5013;
       font-size: 20px;
       float: left;
       width: 50%;
@@ -67,12 +67,12 @@
       transition: .5s ease;
     }
     .tab-group li a:hover {
-      background: #33B2FF;
-      color: #ffffff;
+      background: #DC5013;
+      color: #DC5013;
     }
     .tab-group .active a {
-      background: #33CAFF;
-      color: #ffffff;
+      background: #DC5013;
+      color: #DC5013;
     }
 
     .tab-content > div:last-child {
@@ -81,7 +81,7 @@
 
     h1 {
       text-align: center;
-      color: #ffffff;
+      color: #DC5013;
       font-weight: 300;
       margin: 0 0 40px;
     }
@@ -170,7 +170,7 @@
       text-transform: uppercase;
       letter-spacing: .1em;
       background: #61C4FF;
-      color: #ffffff;
+      color: #DC5013;
       -webkit-transition: all 0.5s ease;
       transition: all 0.5s ease;
       -webkit-appearance: none;

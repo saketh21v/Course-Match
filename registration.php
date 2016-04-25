@@ -193,6 +193,7 @@ $fName = "";
 $lName = "";
 $psswd = "";
 $email = "";
+$phNo = 00000000;
 $jYear = 2016;
 $stream = "";
 $About = "";
@@ -205,21 +206,24 @@ $query = "";
 if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
 	  $conn = mysqli_connect("localhost", "root", "", "coursematch");
 
-      $ID = $_POST["ID"];
-	    $fName = $_POST["fName"];
-	    $lName = $_POST["lName"];
-	    $psswd = $_POST["psswd"];
-	    $email = $_POST["email"];
-      $jYear = $_POST["jYear"];
-      $stream = $_POST["stream"];
+    $ID = $_POST["ID"];
+	  $fName = $_POST["fName"];
+	  $lName = $_POST["lName"];
+	  $psswd = $_POST["psswd"];
+	  $email = $_POST["email"];
+	  $phNo = $_POST["phNo"];
+    $jYear = $_POST["jYear"];
+    $stream = $_POST["stream"];
 
-	    $queryMain = "INSERT INTO student VALUES('".$fName."','".$lName."', '".$ID."', '".$psswd."', '".$stream."', '".$jYear."')";
+	  $queryMain = "INSERT INTO student VALUES('".$fName."','".$lName."', '".$ID."', '".$psswd."', '".$stream."', '".$jYear."')";
       $queryEmail = "INSERT INTO student_email VALUES('".$ID."', '".$email."')";
+      $queryPhone = "INSERT INTO student_phone VALUES('".$ID."', '".$phNo."')";
 
       $l = mysqli_query($conn, $queryMain);
+      $j = mysqli_query($conn, $queryEmail);
+      $k = mysqli_query($conn, $queryPhone);
 
       if($l){
-        echo "<script>alert('lled')</script>";
         $registered = true;
 	    }
 	    else{
@@ -261,6 +265,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
                 </label>
                 <input type="text"required autocomplete="off" name="lName"/>
               </div>
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Phone Number<span class="req">*</span>
+              </label>
+              <input type="text"required autocomplete="off" name="phNo"/>
             </div>
 
             <div class="field-wrap">
@@ -352,9 +363,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST)){
   var reg = <?php echo $registered ?>;
   // document.forms['regForm'].setAttribute('action', 'profile.php');
 
-  alert(reg);
+  // alert(reg);
   if(reg == 1){
-    alert(reg);
+    // alert(reg);
     document.getElementById("sub").click();
   }
 

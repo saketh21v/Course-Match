@@ -6,7 +6,7 @@ body{
 
 	}
 .click{
-	  background: url('images/blockFace.jpeg');
+	  background: url('images/profile_placeholder.gif');
 	  background-size:contain;
 	  position: relative;
 	    -webkit-border-radius: 50%;
@@ -51,7 +51,7 @@ body{
 	margin-top:24vh;
 	}
 .Img{
-	  background: url('images/blockFace.jpeg');
+	  background: url('images/profile_placeholder.gif');
 	  background-size:contain;
 	  	  z-index: 9999;
 	  position: relative;

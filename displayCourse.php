@@ -18,7 +18,7 @@
     }
 
     body {
-      background: #AB4F4F;
+      background: #5F6E76;
       font-family: 'Titillium Web', sans-serif;
     }
 
@@ -33,7 +33,7 @@
     }
 
     .form {
-      background: rgba(170,46,46, 0.9);
+      background: #B9ADA8;
       padding: 40px;
       max-width: 600px;
       margin: 40px auto;

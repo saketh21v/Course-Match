@@ -116,7 +116,7 @@ function clickSearch() {
 	}
 	searchValue = "display".concat(searchValue);
 	searchValue = searchValue.concat(".php");
-	alert(searchValue);
+	// alert(searchValue);
 	var searchForm = document.forms["searchForm"];
 	searchForm.setAttribute("action", searchValue);
 }
@@ -144,7 +144,7 @@ function clickSearch() {
 <div class="PopUp" style="opacity: 0; margin-top: 0px;">Open Profile</div>
 <div class="clickPopUp">
 <ul id=menu>
-<h4><a class="username" href=""><?php echo $ID ?></a></h4>
+<h4><a class="username" href=""><?php echo $fName." ".$lName ?></a></h4>
 
 <div class="Courses">
 	<li class=menuL><h5 class="buttons"><a class="username" href="#Courses">Courses</a></h5></li>
@@ -194,7 +194,7 @@ var $Penu = $('.Portfolio');
 function reset(P){
         switch (P) {
           case 'C':
-          alert("C "+$Cenu.hasClass('clickCC'));
+          // alert("C "+$Cenu.hasClass('clickCC'));
             if($Cenu.hasClass('clickCC')){
                   $('.clickCC').addClass('Courses');
                   $('.clickCC').removeClass('clickCC');
@@ -203,7 +203,7 @@ function reset(P){
               }
             break;
           case 'P':
-          alert("P "+$Penu.hasClass('.clickPP'));
+          // alert("P "+$Penu.hasClass('.clickPP'));
             if($Penu.hasClass('.clickPP')){
     	            $('.clickPP').addClass('Portfolio');
     	            $('.clickPP').removeClass('clickPP');

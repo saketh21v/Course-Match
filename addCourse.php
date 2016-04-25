@@ -246,6 +246,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && count($_POST) > 1){
 
       $query = "INSERT INTO Feedback VALUES('".$feedID."','".$ID."','".$Course."','".$Instructor."','".$Rating."','".$Year."','".$Semester."','".$Feedback."',sysdate())";
 	     $l = mysqli_query($conn, $query);
+
        $query = "INSERT INTO Student_Course VALUES('".$ID."','".$Course."')";
        $l = mysqli_query($conn, $query);
        mysqli_close($conn);
